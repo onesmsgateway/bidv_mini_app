@@ -14,20 +14,8 @@ namespace payment.api.Services.ModelApi.Request
 
     public class WebViewHeaderRequest
     {
-        [FromHeader, JsonPropertyName("X-Client-ID"), Required(ErrorMessage = "thiếu thông tin trường X-Client-ID")]
-        public string XClientID { get; set; }
-
-        [FromHeader, JsonPropertyName("X-Client-Secret"), Required(ErrorMessage = "thiếu thông tin trường X-Client-Secret")]
-        public string XClientSecret { get; set; }
-
         [FromHeader, JsonPropertyName("Content-Type"), Required(ErrorMessage = $"thiếu thông tin trường Content-Type")]
         public string ContentType { get; set; }
-
-        [FromHeader, JsonPropertyName("User-Agent"), Required(ErrorMessage = $"thiếu thông tin trường User-Agent")]
-        public string UserAgent { get; set; }
-
-        [FromHeader, JsonPropertyName("Channel"), Required(ErrorMessage = $"thiếu thông tin trường Channel")]
-        public string Channel { get; set; }
 
         // 1. Mandatory: Thời gian gửi request (Ex: 2023-02-21T08:09:09.336Z)
         [FromHeader, JsonPropertyName("Timestamp"), TimestampValidator]
@@ -37,16 +25,6 @@ namespace payment.api.Services.ModelApi.Request
         [FromHeader, JsonPropertyName("X-API-Interaction-ID"), XApiInteractionIdValidator]
         public string XApiInteractionId { get; set; }
 
-        [FromHeader, JsonPropertyName("X-Idempotency-Key")]
-        public string? XIdempotencyKey { get; set; }
-
-        // 3. Optional: Mã đối tác xác định danh cho BIDV (Ex: SSMedia)
-        [FromHeader, JsonPropertyName("X-Customer-IP-Address")]
-        public string? XCustomerIPAddress { get; set; }
-
-        //https://devbidvapi.ssmedia.vn/bidv-ssmedia/getUrl
-        [FromHeader, Required, ApiUrlValidator]
-        public string ApiUrl { get; set; }
         [FromHeader, JsonPropertyName("Partner-Code")]
         public string? PartnerCode { get; set; }
     }
@@ -56,8 +34,6 @@ namespace payment.api.Services.ModelApi.Request
         /// <summary>
         /// Số GT TT của khách hàng (Bắt buộc - M)
         /// </summary>
-        //[JsonPropertyName("user_id")]
-        //[Required(ErrorMessage = "thiếu thông tin UserId")]
         [FromBody, JsonPropertyName("user_id"), Required(ErrorMessage = "thiếu thông tin trường user_id")]
         public string UserId { get; set; }
 

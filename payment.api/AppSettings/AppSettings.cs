@@ -31,6 +31,8 @@
         public readonly static string partnerUserAgent = GetAppSettingsKey("partner:user_agent");
         public readonly static string partnerXCientCertificate = GetAppSettingsKey("partner:x_client_certificate");
         public readonly static string partnerCustomerIPAddress = GetAppSettingsKey("partner:customer_id_address");
-        public readonly static string partnerServiceUrl = GetAppSettingsKey("invoice:service_url");
+
+        public readonly static string partnerServiceId = GetAppSettingsKey("partner:service_id");
+
     }
 }

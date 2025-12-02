@@ -33,23 +33,4 @@ namespace payment.api.Validator
             return ValidationResult.Success;
         }
     }
-
-    public sealed class ApiUrlValidator : ValidationAttribute
-    {
-        protected override ValidationResult IsValid(object _value, ValidationContext validationContext)
-        {
-            if (_value == null || string.IsNullOrWhiteSpace(_value.ToString()))
-                return new ValidationResult("ApiUrl is required");
-
-            var url = _value.ToString().Trim();
-
-            if (!Uri.TryCreate(url, UriKind.Absolute, out var uriResult))
-                return new ValidationResult("ApiUrl is not valid");
-
-            if (uriResult.Scheme != Uri.UriSchemeHttp && uriResult.Scheme != Uri.UriSchemeHttps)
-                return new ValidationResult("ApiUrl must start with http:// or https://");
-
-            return ValidationResult.Success;
-        }
-    }
 }

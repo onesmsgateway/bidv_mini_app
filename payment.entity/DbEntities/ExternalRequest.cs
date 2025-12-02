@@ -9,6 +9,7 @@ namespace payment.entity.DbEntities
         public string? BillNumber { get; set; }
         [Column("SYSTEM")]
         public string? System { get; set; }
+        [Column("SERVICE")]
         public string? Service { get; set; }
         [Column("SERVICE_ID")]
         public string? ServiceId { get; set; }
