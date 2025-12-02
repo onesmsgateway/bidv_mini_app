@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35219.272
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentPackageTelco.api", "payment.api\PaymentPackageTelco.api.csproj", "{47D2AFA5-855E-4182-9055-FAF6601C9EA9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentPackageTelco.entity", "payment.entity\PaymentPackageTelco.entity.csproj", "{4FD937C6-AF99-47A8-9417-8AA54DB8071C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{47D2AFA5-855E-4182-9055-FAF6601C9EA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47D2AFA5-855E-4182-9055-FAF6601C9EA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47D2AFA5-855E-4182-9055-FAF6601C9EA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47D2AFA5-855E-4182-9055-FAF6601C9EA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FD937C6-AF99-47A8-9417-8AA54DB8071C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FD937C6-AF99-47A8-9417-8AA54DB8071C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FD937C6-AF99-47A8-9417-8AA54DB8071C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FD937C6-AF99-47A8-9417-8AA54DB8071C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EEB9B6D2-6906-412C-B7DC-66F9A9B123E6}
+	EndGlobalSection
+EndGlobal
