@@ -1,3 +1,0 @@
-﻿namespace payment.api.Validator
-{
-}

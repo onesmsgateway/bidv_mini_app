@@ -20,6 +20,9 @@ namespace payment.api.Services.MainApi.PaymentHandler
 
         public async Task<IApiResponse> Handle(WebViewRequest request, CancellationToken cancellationToken)
         {
+
+
+
             var _urlBuilder = new StringBuilder();
             _urlBuilder.Append(AppConst.webUrlBase); 
             _urlBuilder.Append($"&token={(await BidvAccountService.GetAccessTokenAsync()).AccessToken}");
