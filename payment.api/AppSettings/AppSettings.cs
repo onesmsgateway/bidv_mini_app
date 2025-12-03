@@ -29,7 +29,7 @@
         public readonly static string bidvSecretKeyAres256 = GetAppSettingsKey("bidv:secret_key_ares256");
         public readonly static string bidvConfirmPaymentUrl = GetAppSettingsKey("bidv:payment_url");
         public readonly static string bidvNavigatorUrl = GetAppSettingsKey("bidv:navigator_url");
-        public readonly static string bidvCacheTokenKey = GetAppSettingsKey("bidv:tokey_key");
+        public readonly static string bidvCacheTokenKey = GetAppSettingsKey("bidv:cache_tokey_key");
         public readonly static string bidvCacheMunutesDuration = GetAppSettingsKey("bidv:cache_minutes_duration");
 
         public readonly static string partnerPrivateKeyRsa = GetAppSettingsKey("partner:private_key_rsa");

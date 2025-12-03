@@ -214,9 +214,9 @@ namespace payment.entity
             });
             #endregion
 
-            //modelBuilder.HasSequence("CUSTOMER_ACCOUNT_INFO_SEQ");
-            //modelBuilder.HasSequence("EXTERNAL_REQUEST_SEQ");
-            //modelBuilder.HasSequence("INSTANT_PAYMENT_NOTIFICATION_SEQ");
+            modelBuilder.HasSequence("CUSTOMER_ACCOUNT_INFO_SEQ");
+            modelBuilder.HasSequence("EXTERNAL_REQUEST_SEQ");
+            modelBuilder.HasSequence("INSTANT_PAYMENT_NOTIFICATION_SEQ");
         }
     }
 }

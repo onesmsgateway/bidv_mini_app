@@ -12,7 +12,7 @@ namespace payment.api.Controllers
     [ApiController]
     [Route("api/[Controller]")]
     [Produces("application/json")]
-    public partial class ProcessWebViewController : ControllerBase
+    public class ProcessWebViewController : ControllerBase
     {
         public ProcessWebViewController(IMediator mediator) => _mediator = mediator;
 

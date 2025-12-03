@@ -10,9 +10,9 @@ namespace payment.api.Controllers
     [ApiController]
     [Route("api/[Controller]")]
     [Produces("application/json")]
-    public partial class PaymentController : ControllerBase
+    public class PaymentController : ControllerBase
     {
-        private PaymentController(IMediator mediator)
+        public PaymentController(IMediator mediator)
         {
             _mediator = mediator;
         }
