@@ -16,7 +16,7 @@ namespace payment.entity
 
         public virtual DbSet<ExternalRequest> ExternalRequests { get; set; } = null!;
         public virtual DbSet<CustomerAccountInfo> CustomerAccountInfos { get; set; } = null!;
-        public virtual DbSet<InstantPaymentNotification> InstantPaymentNotifications { get; set; } = null!;
+        public virtual DbSet<PayBill> PayBills { get; set; } = null!;
         public virtual DbSet<PackageTelco> PackageTelcos { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -41,6 +41,12 @@ namespace payment.entity
                       .IsUnicode(false)
                       .IsRequired(false)
                       .HasColumnName("CUSTOMER_ID");
+      
+                entity.Property(e => e.Fullname)
+                      .HasMaxLength(300)
+                      .IsUnicode(false)
+                      .IsRequired(false)
+                      .HasColumnName("FULLNAME");
 
                 entity.Property(e => e.CreateDate)
                       .HasMaxLength(300)
@@ -149,14 +155,14 @@ namespace payment.entity
             #endregion
 
             #region EXTERNAL_REQUEST
-            modelBuilder.Entity<InstantPaymentNotification>(entity =>
+            modelBuilder.Entity<PayBill>(entity =>
             {
-                entity.ToTable("INSTANT_PAYMENT_NOTIFICATION");
+                entity.ToTable("PAY_BILL");
 
                 entity.Property(e => e.Id)
                       .HasPrecision(18)
                       .HasColumnName("ID")
-                      .HasDefaultValueSql("\"GWTEST\".\"INSTANT_PAYMENT_NOTIFICATION_SEQ\".nextval ");
+                      .HasDefaultValueSql("\"GWTEST\".\"PAY_BILL_SEQ\".nextval ");
 
                 entity.Property(e => e.TransactionId)
                       .HasMaxLength(300)
@@ -216,7 +222,7 @@ namespace payment.entity
 
             modelBuilder.HasSequence("CUSTOMER_ACCOUNT_INFO_SEQ");
             modelBuilder.HasSequence("EXTERNAL_REQUEST_SEQ");
-            modelBuilder.HasSequence("INSTANT_PAYMENT_NOTIFICATION_SEQ");
+            modelBuilder.HasSequence("PAY_BILL_SEQ");
         }
     }
 }

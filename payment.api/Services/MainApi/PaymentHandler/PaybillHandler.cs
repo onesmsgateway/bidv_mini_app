@@ -7,7 +7,7 @@ using static payment.api.Services.ModelApi.ApiModelBase;
 
 namespace payment.api.Services.MainApi.PaymentHandler
 {
-    public class PaybillHandler : IRequestHandler<InstantPaymentNotificationRequest, IApiResponse>
+    public class PaybillHandler : IRequestHandler<PayBillRequest, IApiResponse>
     {
         private readonly PaymentPackageTelcoDbContext _dbContext;
         public PaybillHandler(PaymentPackageTelcoDbContext dbContext)
@@ -15,9 +15,9 @@ namespace payment.api.Services.MainApi.PaymentHandler
             _dbContext = dbContext;
         }
         
-        public async Task<IApiResponse> Handle(InstantPaymentNotificationRequest request, CancellationToken cancellationToken)
+        public async Task<IApiResponse> Handle(PayBillRequest request, CancellationToken cancellationToken)
         {
-            var hasIpn = _dbContext.InstantPaymentNotifications.Any(ipn => ipn.TransactionId == request.TransactionId || ipn.TransactionBidv == request.TransactionBidv ||
+            var hasIpn = _dbContext.PayBills.Any(ipn => ipn.TransactionId == request.TransactionId || ipn.TransactionBidv == request.TransactionBidv ||
                                                                      ipn.BillNumber.Equals(request.BillNumber));
             if (hasIpn)
             {
@@ -26,7 +26,7 @@ namespace payment.api.Services.MainApi.PaymentHandler
 
             try
             {
-                _dbContext.InstantPaymentNotifications.Add(new entity.DbEntities.InstantPaymentNotification
+                _dbContext.PayBills.Add(new entity.DbEntities.PayBill
                 {
                     TransactionId = request.TransactionId,
                     TransactionBidv = request.TransactionBidv,

@@ -3,7 +3,7 @@ using static payment.api.Services.ModelApi.ApiModelBase;
 
 namespace payment.api.Services.ModelApi.Request
 {
-    public class InstantPaymentNotificationRequest : IApiInput
+    public class PayBillRequest : IApiInput
     {
         [JsonPropertyName("trans_id")]
         public string TransactionId { get; set; }

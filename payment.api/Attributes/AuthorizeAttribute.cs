@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using payment.api.AppSettings;
+using payment.api.Common;
 using PaymentPackageTelco.api.Common;
 
 namespace PaymentPackageTelco.api.Attributes
@@ -29,6 +30,13 @@ namespace PaymentPackageTelco.api.Attributes
             if (!hasAllowAnonymousAttribute)
             {
                 var _token = context.HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+                var _claimPrinciple = JwtUtils.GetTokenInfo(_token ?? "", AppConst.jwtKey);
+                
+                if (_claimPrinciple == null)
+                {
+                    context.Result = new JsonResult(new { message = "Unauthorized: token's invalid" }) { StatusCode = StatusCodes.Status401Unauthorized };
+                    return;
+                }
 
                 if (!(RedisHelper.Get(AppConst.bidvCacheTokenKey) == _token))
                 {

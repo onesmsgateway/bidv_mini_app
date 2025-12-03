@@ -7,5 +7,8 @@ namespace payment.entity.DbEntities
     {
         [Column("CUSTOMER_ID")]
         public string CustomerId { get; set; }
+
+        [Column("FULLNAME")]
+        public string Fullname { get; set; }
     }
 }

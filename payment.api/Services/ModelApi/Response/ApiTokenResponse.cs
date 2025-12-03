@@ -2,7 +2,7 @@
 
 namespace payment.api.Services.ModelApi.Response
 {
-    public class AccessTokenResponse : IApiResponse
+    public class ApiAccessTokenResponse : IApiResponse
     {
         // Loại token, thường là "Bearer"
         public string token_type { get; set; }

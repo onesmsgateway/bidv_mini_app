@@ -8,7 +8,7 @@ namespace payment.api.Services.CommonServices
 {
     public class BidvAccountService
     {
-        public static async Task<AccessTokenResponse> GetAccessTokenAsync(string tokenClientId, string clientSecret)
+        public static async Task<ApiAccessTokenResponse> GetAccessTokenAsync(string tokenClientId, string clientSecret)
         {
             var _requestAccessTokenUrl = AppConst.bidvAccessTokenUrl;
             using (var _httpClient = new HttpClient())
@@ -31,7 +31,7 @@ namespace payment.api.Services.CommonServices
                         if (response.IsSuccessStatusCode)
                         {
                             var _json = await response.Content.ReadAsStringAsync();
-                          return JsonConvert.DeserializeObject<AccessTokenResponse>(_json);
+                          return JsonConvert.DeserializeObject<ApiAccessTokenResponse>(_json);
                         }
                     }
                 }
@@ -42,9 +42,9 @@ namespace payment.api.Services.CommonServices
             }
         }
 
-        public static async Task<AccessTokenResponse?> GetTokenAsynWithCache(string tokenClientId, string clientSecret, string _keyCache)
+        public static async Task<ApiAccessTokenResponse?> GetTokenAsynWithCache(string tokenClientId, string clientSecret, string _keyCache)
         {
-            var _cacheToken = RedisHelper.Get<AccessTokenResponse>(_keyCache);
+            var _cacheToken = RedisHelper.Get<ApiAccessTokenResponse>(_keyCache);
             if (_cacheToken == null || string.IsNullOrWhiteSpace(_cacheToken.access_token))
             {
                 _cacheToken = await GetAccessTokenAsync(tokenClientId, clientSecret);

@@ -46,7 +46,7 @@ namespace payment.api.Controllers
         /// (5) API tiếp nhận thông báo giao dịch thành công từ BIDV, IPN
         /// </summary>
         [HttpPost("pay-bill")]  //tailieu: bidv_tthd_taikhoandinhdan_thuhoSMB
-        public async Task<IApiResponse> PayBill([FromBody] InstantPaymentNotificationRequest request)
+        public async Task<IApiResponse> PayBill([FromBody] PayBillRequest request)
         {
             return await _mediator.Send(request);
         }

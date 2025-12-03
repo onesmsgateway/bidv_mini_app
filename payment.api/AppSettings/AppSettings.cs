@@ -31,12 +31,15 @@
         public readonly static string bidvNavigatorUrl = GetAppSettingsKey("bidv:navigator_url");
         public readonly static string bidvCacheTokenKey = GetAppSettingsKey("bidv:cache_tokey_key");
         public readonly static string bidvCacheMunutesDuration = GetAppSettingsKey("bidv:cache_minutes_duration");
+        public readonly static string bidvGetBillUrl = GetAppSettingsKey("bidv:get_bill_url");
 
         public readonly static string partnerPrivateKeyRsa = GetAppSettingsKey("partner:private_key_rsa");
         public readonly static string partnerChannel = GetAppSettingsKey("partner:channel");
         public readonly static string partnerUserAgent = GetAppSettingsKey("partner:user_agent");
         public readonly static string partnerXCientCertificate = GetAppSettingsKey("partner:x_client_certificate");
         public readonly static string partnerCustomerIPAddress = GetAppSettingsKey("partner:customer_id_address");
+        public readonly static string partnerJwtKey = GetAppSettingsKey("partner:jwt_key");
+        public readonly static int partnerJwtExpired = int.Parse(GetAppSettingsKey("partner:jwt_expired"));
 
         public readonly static string partnerServiceId = GetAppSettingsKey("partner:service_id");
 

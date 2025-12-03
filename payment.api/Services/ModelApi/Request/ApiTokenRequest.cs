@@ -3,7 +3,7 @@ using static payment.api.Services.ModelApi.ApiModelBase;
 
 namespace payment.api.Services.ModelApi.Request
 {
-    public class TokenRequest : IApiInput
+    public class ApiTokenRequest : IApiInput
     {
         [JsonPropertyName("client_id")]
         public string ClientId { get; set; }

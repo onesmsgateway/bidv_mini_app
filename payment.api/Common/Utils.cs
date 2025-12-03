@@ -141,4 +141,31 @@ namespace payment.api.Common
             return output;
         }
     }
+
+    public class JwtUtils
+    {
+        public static JwtSecurityToken GetTokenInfo(string token, string secret)
+        {
+            SecurityToken validatedToken;
+            try
+            {
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes(secret);
+                tokenHandler.ValidateToken(token, new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.FromMinutes(AppConst.partnerJwtExpired)
+                }, out validatedToken);
+                return (JwtSecurityToken)validatedToken;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+        }
+    }
 }
