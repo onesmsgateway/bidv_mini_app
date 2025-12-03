@@ -30,15 +30,8 @@ namespace PaymentPackageTelco.api.Attributes
             if (!hasAllowAnonymousAttribute)
             {
                 var _token = context.HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-                var _claimPrinciple = JwtUtils.GetTokenInfo(_token ?? "", AppConst.jwtKey);
-                
+                var _claimPrinciple = JwtUtils.GetTokenInfo(_token, AppConst.jwtKey);
                 if (_claimPrinciple == null)
-                {
-                    context.Result = new JsonResult(new { message = "Unauthorized: token's invalid" }) { StatusCode = StatusCodes.Status401Unauthorized };
-                    return;
-                }
-
-                if (!(RedisHelper.Get(AppConst.bidvCacheTokenKey) == _token))
                 {
                     context.Result = new JsonResult(new { message = "Unauthorized: token's invalid" }) { StatusCode = StatusCodes.Status401Unauthorized };
                     return;
