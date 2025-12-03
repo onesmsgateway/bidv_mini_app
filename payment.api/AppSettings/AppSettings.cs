@@ -11,6 +11,10 @@
             return _configuration[key];
         }
 
+        public readonly static string REDIS_HOST = GetAppSettingsKey("ConnectionRedis:Host");
+        public readonly static int REDIS_PORT = Convert.ToInt32(GetAppSettingsKey("ConnectionRedis:Port"));
+        public readonly static string REDIS_PASS = GetAppSettingsKey("ConnectionRedis:Password");
+
         public readonly static string jwtKey = GetAppSettingsKey("payment:jwt_key");
         public readonly static int jwtExpireHours = int.Parse(GetAppSettingsKey("payment:jwt_expire_hours"));
         public readonly static string webUrlBase = GetAppSettingsKey("webview:url_base");
@@ -25,6 +29,8 @@
         public readonly static string bidvSecretKeyAres256 = GetAppSettingsKey("bidv:secret_key_ares256");
         public readonly static string bidvConfirmPaymentUrl = GetAppSettingsKey("bidv:payment_url");
         public readonly static string bidvNavigatorUrl = GetAppSettingsKey("bidv:navigator_url");
+        public readonly static string bidvCacheTokenKey = GetAppSettingsKey("bidv:tokey_key");
+        public readonly static string bidvCacheMunutesDuration = GetAppSettingsKey("bidv:cache_minutes_duration");
 
         public readonly static string partnerPrivateKeyRsa = GetAppSettingsKey("partner:private_key_rsa");
         public readonly static string partnerChannel = GetAppSettingsKey("partner:channel");

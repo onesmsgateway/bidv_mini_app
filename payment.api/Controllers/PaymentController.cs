@@ -1,10 +1,12 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using payment.api.Services.ModelApi.Request;
+using PaymentPackageTelco.api.Attributes;
 using static payment.api.Services.ModelApi.ApiModelBase;
 
 namespace payment.api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[Controller]")]
     [Produces("application/json")]

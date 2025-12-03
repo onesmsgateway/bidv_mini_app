@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using payment.api.Services.ModelApi;
 using payment.api.Services.ModelApi.Request;
 using payment.api.Validator;
@@ -23,7 +24,7 @@ namespace payment.api.Services.MainApi.PaymentHandler
                 return new ApiDetailedResponseBase { StatusCode = HttpStatusCode.BadRequest, Message = "Invalid Checksum", Details = null };
             }
 
-            var _externalRequest = await _dbContext.ExternalRequests.FindAsync(request.BillNumber);
+            var _externalRequest = await _dbContext.ExternalRequests.FirstOrDefaultAsync(t=>t.BillNumber == request.BillNumber);
             if(_externalRequest == null)
                 return new ApiDetailedResponseBase { StatusCode = HttpStatusCode.NotFound, Message = "Bill not found", Details = null };
 

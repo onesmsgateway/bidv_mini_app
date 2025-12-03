@@ -35,4 +35,9 @@ namespace payment.api.Services.ModelApi.Request
         [FromBody, JsonPropertyName("system"), Required(ErrorMessage = "thiếu thong tin trường System")]
         public string? System { get; set; }
     }
+
+    public class BillHeaderRequest : IApiInput
+    {
+
+    }
 }

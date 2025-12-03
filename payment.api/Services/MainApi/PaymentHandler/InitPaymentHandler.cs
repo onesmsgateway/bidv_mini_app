@@ -37,7 +37,7 @@ namespace payment.api.Services.MainApi.PaymentHandler
                 Value = request.Value,
                 DiscountCode = request.DiscountCode,
                 TotalPaymentAmount = request.TotalPaymentAmount,
-                IssueCoporateInvoice = request.IssueCorporateInvoice,
+                IssueCoporateInvoice = (bool)request.IssueCorporateInvoice ? "true": "false",
                 System = request.System,
                 CreateDate = DateTime.UtcNow.ToString(),
             };
@@ -56,7 +56,7 @@ namespace payment.api.Services.MainApi.PaymentHandler
                     //X-Idempotency-Key
                     _request.Headers.Add("Timestamp", DateTime.UtcNow.ToString("o", System.Globalization.CultureInfo.InvariantCulture));
                     _request.Headers.Add("X-Customer-IP-Address", AppConst.partnerCustomerIPAddress);
-                    _request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", (await BidvAccountService.GetAccessTokenAsync()).AccessToken);
+                    _request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", (await BidvAccountService.GetTokenAsynWithCache(AppConst.bidvAccessTokenClientId, AppConst.bidvAccessTokenClientSecret, AppConst.bidvCacheTokenKey)).access_token);
 
                     var _requestObj = new SmartBankingRequest()
                     {

@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using payment.api.AppSettings;
 using payment.api.Common;
 using PaymentPackage.api.Services.ModelApi.Request;
+using PaymentPackageTelco.api.Attributes;
 using System.Text;
 using static payment.api.Services.ModelApi.ApiModelBase;
 
 namespace payment.api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     [Produces("application/json")]

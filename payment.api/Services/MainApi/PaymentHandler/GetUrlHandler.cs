@@ -38,7 +38,7 @@ namespace payment.api.Services.MainApi.PaymentHandler
             
             var _urlBuilder = new StringBuilder();
             _urlBuilder.Append(AppConst.webUrlBase); 
-            _urlBuilder.Append($"&token={(await BidvAccountService.GetAccessTokenAsync()).AccessToken}");
+            _urlBuilder.Append($"&token={(await BidvAccountService.GetTokenAsynWithCache(AppConst.bidvAccessTokenClientId, AppConst.bidvAccessTokenClientSecret, AppConst.bidvCacheTokenKey)).access_token}");
             
             return new WebViewResponse { Url = Utils.Base64UrlEncode(Encoding.UTF8.GetBytes(_urlBuilder.ToString())), ResultCode = "000", ResultDesc = "Success!" };
         }

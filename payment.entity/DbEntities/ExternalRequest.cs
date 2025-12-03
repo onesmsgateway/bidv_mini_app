@@ -30,6 +30,6 @@ namespace payment.entity.DbEntities
         [Column("TOTAL_PAYMENT_AMOUNT")]
         public string? TotalPaymentAmount { get; set; }
         [Column("ISSUE_CORPORATE_INVOICE")]
-        public bool? IssueCoporateInvoice { get; set; }
+        public string? IssueCoporateInvoice { get; set; }
     }
 }
