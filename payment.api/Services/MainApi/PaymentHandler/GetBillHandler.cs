@@ -33,7 +33,7 @@ namespace payment.api.Services.MainApi.PaymentHandler
                 {
                     var _urlGetbill = AppConst.bidvGetBillUrl;
                     var _content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
-
+                    
                     var _response = await httpClient.PostAsync(_urlGetbill, _content);
                     var _responseBody = await _response.Content.ReadAsStringAsync();
 

@@ -12,8 +12,8 @@ public class SmartBankingRequest
     public string Signature { get; set; }
 
     [JsonPropertyName("n")]
-    public string RequestId { get; set; } = "uuid-12345";
+    public string RequestId { get; set; }
 
     [JsonPropertyName("p")]
-    public string PartnerCode { get; set; } = "partner-001";
+    public string PartnerCode { get; set; }
 }

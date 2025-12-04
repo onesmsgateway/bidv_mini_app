@@ -50,5 +50,11 @@ namespace payment.api.Controllers
         {
             return await _mediator.Send(request);
         }
+
+        [HttpPost("inquiry-pay-bill-by-package-id")]
+        public async Task<IApiResponse> inquiryPayBill([FromBody] SearchPaybillRequest request)
+        {
+            return await _mediator.Send(request);
+        }
     }
 }

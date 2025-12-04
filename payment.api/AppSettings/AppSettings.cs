@@ -23,7 +23,7 @@
         public readonly static string bidvAccessTokenClientId = GetAppSettingsKey("bidv:client_id");
         public readonly static string bidvAccessTokenClientSecret = GetAppSettingsKey("bidv:client_secret");
         public readonly static string bidvAccessTokenUrl = GetAppSettingsKey("bidv:request_access_token_url");
-        public readonly static string bidvPaymentUrl = GetAppSettingsKey("bidv:payment_url");
+        public readonly static string bidvPaymentPageUrl = GetAppSettingsKey("bidv:payment_url");
         public readonly static string bidvSmartBankPaymentUrl = GetAppSettingsKey("bidv:smart_banking_payment_url"); //donot endpoint
         public readonly static string bidvPartnerCode = GetAppSettingsKey("bidv:partner_code");
         public readonly static string bidvSecretKeyAres256 = GetAppSettingsKey("bidv:secret_key_ares256");

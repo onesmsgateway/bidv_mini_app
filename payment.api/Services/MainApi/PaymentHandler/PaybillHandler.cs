@@ -1,7 +1,9 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using payment.api.Services.ModelApi;
 using payment.api.Services.ModelApi.Request;
 using payment.entity;
+using payment.entity.DbEntities;
 using System.Net;
 using static payment.api.Services.ModelApi.ApiModelBase;
 
@@ -17,16 +19,16 @@ namespace payment.api.Services.MainApi.PaymentHandler
         
         public async Task<IApiResponse> Handle(PayBillRequest request, CancellationToken cancellationToken)
         {
-            var hasIpn = _dbContext.PayBills.Any(ipn => ipn.TransactionId == request.TransactionId || ipn.TransactionBidv == request.TransactionBidv ||
-                                                                     ipn.BillNumber.Equals(request.BillNumber));
-            if (hasIpn)
+            var count = await _dbContext.PayBills.CountAsync(ipn => ipn.BillNumber == request.BillNumber || ipn.TransactionId == request.TransactionId 
+                                                                               || ipn.TransactionBidv == request.TransactionBidv, cancellationToken);
+            if (count > 0)
             {
                 return new ApiDetailedResponseBase() { StatusCode = HttpStatusCode.BadRequest, Message = "Hóa đơn đã gạch nợ rồi (mỗi hóa đơn chỉ gạch nợ 1 lần)", Details = null };
             }
 
             try
             {
-                _dbContext.PayBills.Add(new entity.DbEntities.PayBill
+                await _dbContext.PayBills.AddAsync(new PayBill
                 {
                     TransactionId = request.TransactionId,
                     TransactionBidv = request.TransactionBidv,
@@ -37,14 +39,15 @@ namespace payment.api.Services.MainApi.PaymentHandler
                     Value = request.Value,
                     Checksum = request.Checksum,
                     CreateDate = DateTime.UtcNow.ToString(),
-                });
-                _dbContext.SaveChanges();
+                }, cancellationToken);
+
+                await _dbContext.SaveChangesAsync(cancellationToken);
 
                 return new ApiDetailedResponseBase()
                 {
                     StatusCode = HttpStatusCode.OK,
                     Message = "success",
-                    Details = null
+                    Details = request.BillNumber
                 };
             }
             catch (Exception ex)
