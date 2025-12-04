@@ -29,7 +29,7 @@ namespace payment.api.Services.ModelApi.Request
         [FromBody, JsonPropertyName("total_payment_amount"), Required(ErrorMessage = "thiếu thong tin trường TotalPaymentAmount")]
         public string? TotalPaymentAmount { get; set; } // Số tiền thanh toán (10,000 VND)
 
-        [FromBody, JsonPropertyName("total_payment_amount"), Required(ErrorMessage = "thiếu thong tin trường TotalPaymentAmount")]
+        [FromBody, JsonPropertyName("issue_corporate_invoice"), Required(ErrorMessage = "thiếu thong tin trường IssueCorporateInvoice")]
         public bool? IssueCorporateInvoice { get; set; } // Xuất hóa đơn doanh nghiệp (Sử dụng bool nếu là dạng bật/tắt)
 
         [FromBody, JsonPropertyName("system"), Required(ErrorMessage = "thiếu thong tin trường System")]

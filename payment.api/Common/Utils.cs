@@ -144,13 +144,13 @@ namespace payment.api.Common
 
     public class JwtUtils
     {
-        public static JwtSecurityToken GetTokenInfo(string token, string secret)
+        public static JwtSecurityToken GetTokenInfo(string token)
         {
             SecurityToken validatedToken;
             try
             {
                 var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(secret);
+                var key = Encoding.ASCII.GetBytes(AppConst.jwtKey);
                 tokenHandler.ValidateToken(token, new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
@@ -167,5 +167,20 @@ namespace payment.api.Common
             }
 
         }
+
+        public static async Task<string> GenerateToken(string customerId, string customerName, int hour_expired)
+        {
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppConst.jwtKey));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            
+            var claims = new[] {
+                new Claim("id", customerId),
+                new Claim("username", customerName),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            };
+            var token = new JwtSecurityToken(null, null, claims, expires: DateTime.Now.AddHours(hour_expired), signingCredentials: credentials);
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
     }
 }

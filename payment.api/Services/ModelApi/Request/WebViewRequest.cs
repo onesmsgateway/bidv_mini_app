@@ -14,15 +14,15 @@ namespace payment.api.Services.ModelApi.Request
 
     public class WebViewHeaderRequest
     {
-        [FromHeader, JsonPropertyName("Content-Type"), Required(ErrorMessage = $"thiếu thông tin trường Content-Type")]
+        [FromHeader(Name = "Content-Type"), Required(ErrorMessage = $"thiếu thông tin trường Content-Type")]
         public string ContentType { get; set; }
 
         // 1. Mandatory: Thời gian gửi request (Ex: 2023-02-21T08:09:09.336Z)
-        [FromHeader, JsonPropertyName("Timestamp"), TimestampValidator]
+        [FromHeader(Name = "Timestamp"), JsonPropertyName("Timestamp"), TimestampValidator]
         public string Timestamp { get; set; }
 
         // 2. Mandatory: Request ID duy nhất để trace log
-        [FromHeader, JsonPropertyName("X-API-Interaction-ID"), XApiInteractionIdValidator]
+        [FromHeader(Name = "X-Api-Interaction-Id"), JsonPropertyName("X-API-Interaction-ID"), XApiInteractionIdValidator]
         public string XApiInteractionId { get; set; }
 
         [FromHeader, JsonPropertyName("Partner-Code")]

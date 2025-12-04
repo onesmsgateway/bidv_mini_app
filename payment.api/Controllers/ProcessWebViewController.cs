@@ -1,14 +1,13 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using payment.api.Services.ModelApi.Request;
 using payment.api.Services.ModelApi.Response;
 using payment.api.Validator;
-using PaymentPackageTelco.api.Attributes;
 using static payment.api.Services.ModelApi.ApiModelBase;
 
 namespace payment.api.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("api/[Controller]")]
     [Produces("application/json")]
@@ -22,6 +21,7 @@ namespace payment.api.Controllers
         /// </summary>
         /// <param name="bRequest">Thông tin giao dịch từ BIDV.</param>
         /// <returns>Đối tượng WebviewResponse chứa URL webview.</returns>
+        [AllowAnonymous]
         [HttpPost("get-url")]
         public async Task<IApiResponse> GetUrl([FromHeader] WebViewHeaderRequest hRequest, [FromBody] WebViewBodyRequest bRequest, CancellationToken cancellation)
         {

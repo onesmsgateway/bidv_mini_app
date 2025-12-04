@@ -48,7 +48,7 @@ namespace payment.api.Services.MainApi.PaymentHandler
                 {
                     var _request = new HttpRequestMessage(HttpMethod.Post, AppConst.bidvSmartBankPaymentUrl);
                     
-                    _request.Headers.Add("Content-Type", "application/json");
+                    //_request.Headers.Add("Content-Type", "application/json");
                     _request.Headers.Add("Channel", AppConst.partnerChannel);
                     _request.Headers.Add("User-Agent", AppConst.partnerUserAgent);
                     _request.Headers.Add("X-API-Interaction-ID", Utils.GenerateRandomDigitWith(12));

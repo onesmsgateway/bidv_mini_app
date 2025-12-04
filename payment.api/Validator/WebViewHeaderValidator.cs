@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace payment.api.Validator
 {
-    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = true)]
     public sealed class TimestampValidator : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
@@ -17,7 +17,7 @@ namespace payment.api.Validator
                DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal,
                out _);
             if (!isValid)
-                new ValidationResult(ErrorMessage ?? $"{validationContext.DisplayName} định dạng chưa đúng: {_expectedFormat}.");
+                return new ValidationResult(ErrorMessage ?? $"{validationContext.DisplayName} định dạng chưa đúng: {_expectedFormat}.");
 
             return ValidationResult.Success;
         }
