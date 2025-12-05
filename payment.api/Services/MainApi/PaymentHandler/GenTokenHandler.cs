@@ -1,14 +1,11 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using payment.api.AppSettings;
 using payment.api.Common;
 using payment.api.Services.ModelApi;
-using payment.api.Services.ModelApi.Response;
 using payment.entity;
 using PaymentPackageTelco.api.Services.ModelApi.Request;
 using System.Net;
-using System.Text;
 using static payment.api.Services.ModelApi.ApiModelBase;
 
 namespace PaymentPackageTelco.api.Services.MainApi.PaymentHandler

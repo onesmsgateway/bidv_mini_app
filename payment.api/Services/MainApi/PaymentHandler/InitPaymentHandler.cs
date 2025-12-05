@@ -1,16 +1,12 @@
 ﻿using MediatR;
-using Newtonsoft.Json;
 using payment.api.AppSettings;
 using payment.api.Common;
-using payment.api.Services.CommonServices;
 using payment.api.Services.ModelApi;
 using payment.api.Services.ModelApi.Request;
-using payment.api.Services.ModelApi.Request.ExternalRequestExtMethod;
 using payment.api.Services.ModelApi.Response;
 using payment.entity;
 using payment.entity.DbEntities;
 using System.Net;
-using System.Net.Http.Headers;
 using System.Text;
 using static payment.api.Services.ModelApi.ApiModelBase;
 

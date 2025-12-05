@@ -21,25 +21,28 @@ namespace PaymentPackageTelco.api.Services.MainApi.PaymentHandler
         {
             try
             {
-                var _combinedData = await _dbContext.ExternalRequests
+                string filterPackageId = request.PackageId?.ToLower() ?? string.Empty;
+                var _searchData = await _dbContext.ExternalRequests
                                         .Join(
                                             _dbContext.PayBills,
-                                            externalRequest => externalRequest.BillNumber,
-                                            payBill => payBill.BillNumber,
-                                            (e, p) => new
+                                            e => e.BillNumber,
+                                            p => p.BillNumber,
+                                            (e, p) => new SearchPaybillResponse
                                             {
-                                                ExternalRequest = e,
-                                                PayBill = p
+                                                TransactionDate = p.TransactionDate,
+                                                Value = p.Value,
+                                                PackageId = e.PackageId,
+                                                CustomerId = p.CustomerId
                                             }
                                         )
-                                        .Where(combined => combined.ExternalRequest.PackageId.Contains(request.PackageId))
+                                        .Where(dto => dto.CustomerId == request.CustomerId && dto.PackageId.ToLower().Contains(filterPackageId))
                                         .Distinct()
                                         .ToListAsync();
 
                 return new ApiDataResponseBase {
                     StatusCode = HttpStatusCode.OK,
                     Message = "Success",
-                    Data = JsonConvert.SerializeObject(_combinedData)
+                    Data = JsonConvert.SerializeObject(_searchData)
                 };
 
             }

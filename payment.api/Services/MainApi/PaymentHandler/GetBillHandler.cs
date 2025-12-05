@@ -33,7 +33,9 @@ namespace payment.api.Services.MainApi.PaymentHandler
                 {
                     var _urlGetbill = AppConst.bidvGetBillUrl;
                     var _content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
-                    
+
+                    #region chở đấu nối bidv
+                    /*
                     var _response = await httpClient.PostAsync(_urlGetbill, _content);
                     var _responseBody = await _response.Content.ReadAsStringAsync();
 
@@ -47,8 +49,10 @@ namespace payment.api.Services.MainApi.PaymentHandler
                     {
                         return new ApiDetailedResponseBase() { StatusCode = HttpStatusCode.BadRequest, Message = "Request không hợp lệ.", Details = _apiGetBillResponse.ResultDesc };
                     }
+                    */
+                    #endregion
 
-                    return new ApiDataResponseBase { StatusCode = HttpStatusCode.OK, Message = "Success!", Data = JsonConvert.SerializeObject(_apiGetBillResponse)};
+                    return new ApiDataResponseBase { StatusCode = HttpStatusCode.OK, Message = "Success!", Data = null /*JsonConvert.SerializeObject(_apiGetBillResponse)*/};
                 }
                 catch (Exception ex)
                 {
