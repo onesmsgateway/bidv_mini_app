@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using payment.api.AppSettings;
 using payment.api.Services.ModelApi;
@@ -52,7 +53,11 @@ namespace payment.api.Services.MainApi.PaymentHandler
                     */
                     #endregion
 
-                    return new ApiDataResponseBase { StatusCode = HttpStatusCode.OK, Message = "Success!", Data = null /*JsonConvert.SerializeObject(_apiGetBillResponse)*/};
+                    var _billNumber = await _dbContext.ExternalRequests
+                                        .Where(er => er.ServiceId == request.ServiceId && er.BillNumber == request.BillNumber)
+                                        .ToListAsync();
+
+                    return new ApiDataResponseBase { StatusCode = HttpStatusCode.OK, Message = "Success!", Data = JsonConvert.SerializeObject(_billNumber) /*JsonConvert.SerializeObject(_apiGetBillResponse)*/};
                 }
                 catch (Exception ex)
                 {
