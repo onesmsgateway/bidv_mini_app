@@ -9,23 +9,10 @@ namespace payment.api.Common
 {
     public class Utils
     {
-        public static string GenerateSha256(string timestamp, string userId, string service, string data, string language)
-        {
-            var _key = AppConst.bidvSignSecretKey;
-            var _payload = $"{_key}|{timestamp}|{userId}|{service}|{data}|{language}";
-            using (var _hmac = new HMACSHA256(Encoding.UTF8.GetBytes(_key)))
-            {
-                var _hashBytes = _hmac.ComputeHash(Encoding.UTF8.GetBytes(_payload));
-                var sb = new StringBuilder(_hashBytes.Length * 2);
-                foreach (var b in _hashBytes) sb.Append(b.ToString("x2"));
-                return sb.ToString();
-            }
-        }
 
-        public static string GenerateSha256(string billnumber, string serviceId)
-        {
+        public static string GenerateSha256(string payload)        {
             var _key = AppConst.bidvSignSecretKey;
-            var _payload = $"{_key}|{serviceId}|{billnumber}";
+            var _payload = $"{_key}|{payload}";
             using (var _hmac = new HMACSHA256(Encoding.UTF8.GetBytes(_key)))
             {
                 var _hashBytes = _hmac.ComputeHash(Encoding.UTF8.GetBytes(_payload));
@@ -178,7 +165,7 @@ namespace payment.api.Common
                 new Claim("username", customerName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
-            var token = new JwtSecurityToken(null, null, claims, expires: DateTime.Now.AddHours(hour_expired), signingCredentials: credentials);
+            var token = new JwtSecurityToken(null, null, claims, expires: DateTime.UtcNow.AddHours(hour_expired), signingCredentials: credentials);
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 

@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 using payment.api.AppSettings;
 using payment.api.Services.ModelApi;
 using payment.api.Services.ModelApi.Request;
-using payment.api.Validator;
 using payment.entity;
 using PaymentPackageTelco.api.Services.ModelApi.Response;
 using System.Net;
@@ -23,10 +22,6 @@ namespace payment.api.Services.MainApi.PaymentHandler
 
         public async Task<IApiResponse> Handle(GetBillBodyRequest request, CancellationToken cancellationToken)
         {
-            if (!request.IsValidChecksum())
-            {
-                return new ApiDetailedResponseBase { StatusCode = HttpStatusCode.BadRequest, Message = "Invalid Checksum", Details = null };
-            }
 
             var _customer = await _dbContext.CustomerAccountInfos.FirstOrDefaultAsync(t => t.CustomerId == request.CustomerId);
             if (_customer == null)

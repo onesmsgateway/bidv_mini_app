@@ -28,7 +28,7 @@ namespace payment.api.Services.MainApi.PaymentHandler
 
             try
             {
-                await _dbContext.PayBills.AddAsync(new PayBill
+                var _payBill = new PayBill()
                 {
                     TransactionId = request.TransactionId,
                     TransactionBidv = request.TransactionBidv,
@@ -39,15 +39,15 @@ namespace payment.api.Services.MainApi.PaymentHandler
                     Value = request.Value,
                     Checksum = request.Checksum,
                     CreateDate = DateTime.UtcNow.ToString(),
-                }, cancellationToken);
-
+                };
+                await _dbContext.PayBills.AddAsync(_payBill, cancellationToken);
                 await _dbContext.SaveChangesAsync(cancellationToken);
 
-                return new ApiDetailedResponseBase()
+                return new ApiDataResponseBase()
                 {
                     StatusCode = HttpStatusCode.OK,
                     Message = "success",
-                    Details = request.BillNumber
+                    Data = new { _payBill.BillNumber, _payBill.ServiceId, _payBill.Value, _payBill.CreateDate}
                 };
             }
             catch (Exception ex)

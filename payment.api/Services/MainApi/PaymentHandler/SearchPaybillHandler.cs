@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using payment.api.Services.ModelApi;
 using payment.entity;
 using PaymentPackageTelco.api.Services.ModelApi.Response;
@@ -42,7 +41,7 @@ namespace PaymentPackageTelco.api.Services.MainApi.PaymentHandler
                 return new ApiDataResponseBase {
                     StatusCode = HttpStatusCode.OK,
                     Message = "Success",
-                    Data = JsonConvert.SerializeObject(_searchData)
+                    Data = _searchData
                 };
 
             }

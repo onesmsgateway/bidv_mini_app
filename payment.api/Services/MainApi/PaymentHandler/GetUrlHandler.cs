@@ -34,7 +34,7 @@ namespace payment.api.Services.MainApi.PaymentHandler
                     CreateDate = DateTime.UtcNow.ToString(),
                 };  
                 await _dbContext.CustomerAccountInfos.AddAsync(_customer);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
             }
             
             var _urlBuilder = new StringBuilder();

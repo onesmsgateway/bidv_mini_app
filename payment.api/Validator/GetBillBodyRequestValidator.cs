@@ -26,7 +26,8 @@ namespace payment.api.Validator
     {
         public static bool IsValidChecksum(this GetBillBodyRequest request)
         {
-            var _macSha256 = Utils.GenerateSha256(request.CustomerId, request.ServiceId);
+            var _payload = $"{request.CustomerId}|{request.ServiceId}";
+            var _macSha256 = Utils.GenerateSha256(_payload);
             return request.Checksum.Equals(_macSha256);
         }
     }

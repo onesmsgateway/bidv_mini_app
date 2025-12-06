@@ -1,7 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using payment.api.Services.ModelApi.Request;
+using payment.api.Services.ModelApi.Response;
+using payment.api.Validator;
 using PaymentPackageTelco.api.Attributes;
+using PaymentPackageTelco.api.Validator;
 using static payment.api.Services.ModelApi.ApiModelBase;
 
 namespace payment.api.Controllers
@@ -38,6 +41,11 @@ namespace payment.api.Controllers
         [HttpPost("get-bill")]
         public async Task<IApiResponse> GetBill([FromBody] GetBillBodyRequest request)
         {
+            if (!request.IsValidChecksum())
+            {
+                return new WebViewResponse { Url = "", ResultCode = "002", ResultDesc = "checksum không hợp lệ" };
+            }
+
             return await _mediator.Send(request);
         }
 
@@ -48,6 +56,11 @@ namespace payment.api.Controllers
         [HttpPost("pay-bill")]  //tailieu: bidv_tthd_taikhoandinhdan_thuhoSMB
         public async Task<IApiResponse> PayBill([FromBody] PayBillRequest request)
         {
+            if (!request.IsValidChecksum())
+            {
+                return new WebViewResponse { Url = "", ResultCode = "002", ResultDesc = "checksum không hợp lệ" };
+            }
+
             return await _mediator.Send(request);
         }
 
