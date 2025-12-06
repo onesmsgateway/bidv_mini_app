@@ -7,6 +7,9 @@ namespace payment.api.Services.ModelApi.Request
 {
     public class BillBodyRequest: IApiInput
     {
+        [FromBody, JsonPropertyName("customer_id"), Required(ErrorMessage = "thiếu thong tin trường CustomerId")]
+        public string CustomerId { get; set; }
+
         [FromBody, JsonPropertyName("service_id"), Required(ErrorMessage ="thiếu thong tin trường ServiceId")]
         public string? ServiceId { get; set; } // Dịch vụ (Data)
 

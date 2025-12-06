@@ -2,9 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
-using payment.api.AppSettings;
 using payment.api.Common;
-using PaymentPackageTelco.api.Common;
 
 namespace PaymentPackageTelco.api.Attributes
 {

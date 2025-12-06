@@ -78,6 +78,12 @@ namespace payment.entity
                       .IsRequired(false)
                       .HasColumnName("SYSTEM");
 
+                entity.Property(e => e.CustomerId)
+                      .HasMaxLength(300)
+                      .IsUnicode(false)
+                      .IsRequired(false)
+                      .HasColumnName("CUSTOMER_ID");
+
                 entity.Property(e => e.Service)
                       .HasMaxLength(300)
                       .IsUnicode(false)
@@ -126,6 +132,12 @@ namespace payment.entity
                      .IsUnicode(false)
                      .IsRequired(false)
                      .HasColumnName("VALUE");
+
+                entity.Property(e => e.Status)
+                    .HasMaxLength(300)
+                    .IsUnicode(false)
+                    .IsRequired(false)
+                    .HasColumnName("STATUS");
 
                 entity.Property(e => e.DiscountCode)
                       .HasMaxLength(300)

@@ -1,8 +1,9 @@
 ﻿using System.Text.Json.Serialization;
+using static payment.api.Services.ModelApi.ApiModelBase;
 
 namespace PaymentPackageTelco.api.Services.ModelApi.Response
 {
-    public class ApiGetBillResponse
+    public class ApiGetBillResponse : IApiResponse
     {
         [JsonPropertyName("result_code")]
         public string ResultCode { get; set; }
@@ -26,11 +27,11 @@ namespace PaymentPackageTelco.api.Services.ModelApi.Response
         public string Type { get; set; }
 
         [JsonPropertyName("total_amount")]
-        public string TotalAmount { get; set; }
+        public decimal? TotalAmount { get; set; }
 
         [JsonPropertyName("data")]
         // Thuộc tính 'data' ngoài cùng là một mảng các đối tượng chứa chi tiết hóa đơn theo chu kỳ (Period)
-        public List<PeriodData> Data { get; set; }
+        public IList<PeriodData>? Data { get; set; }
     }
 
     // --- Lớp: Dữ liệu theo Chu kỳ (Period) ---
@@ -41,7 +42,7 @@ namespace PaymentPackageTelco.api.Services.ModelApi.Response
 
         [JsonPropertyName("data")]
         // Thuộc tính 'data' bên trong là một mảng các hóa đơn chi tiết
-        public List<BillDetail> Bills { get; set; }
+        public IList<BillDetail> Data { get; set; }
     }
 
     // --- Lớp: Chi tiết Hóa đơn (Bill Detail) ---
