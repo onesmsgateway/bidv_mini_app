@@ -19,10 +19,11 @@ namespace payment.api.Controllers
         private readonly IMediator _mediator;
 
         [HttpPost("get-package-telco")]
-        public async Task<IApiResponse> PackageTelco(GetPackageRequest request)
+        public async Task<IApiResponse> PackageTelco(SearchPackageRequest request)
         {
             return await _mediator.Send(request);
         }
+
 
         /// <summary>
         /// (6)API cung cấp URL để đóng Webview và quay lại ứng dụng ngân hàng.

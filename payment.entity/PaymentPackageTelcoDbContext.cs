@@ -232,9 +232,132 @@ namespace payment.entity
             });
             #endregion
 
+            #region PACKAGE_TELCO
+            modelBuilder.Entity<PackageTelco>(entity =>
+            {
+                entity.ToTable("PACKAGE_TELCO");
+
+                entity.Property(e => e.Id)
+                      .HasPrecision(18)
+                      .HasColumnName("ID")
+                      .HasDefaultValueSql("\"GWTEST\".\"PACKAGE_TELCO_SEQ\".nextval ");
+
+                entity.Property(e => e.PackageName)
+                      .HasMaxLength(300)
+                      .IsUnicode(false)
+                      .IsRequired(false)
+                      .HasColumnName("PACKAGE_NAME");
+
+                entity.Property(e => e.Telco)
+                      .HasMaxLength(300)
+                      .IsUnicode(false)
+                      .IsRequired(false)
+                      .HasColumnName("TELCO");
+
+                entity.Property(e => e.Data)
+                      .HasMaxLength(300)
+                      .IsUnicode(false)
+                      .IsRequired(false)
+                      .HasColumnName("DATA");
+
+                entity.Property(e => e.Amount)
+                     .HasMaxLength(300)
+                     .IsUnicode(false)
+                     .IsRequired(false)
+                     .HasColumnName("AMT");
+
+                entity.Property(e => e.CreateDate)
+                      .HasMaxLength(300)
+                      .IsUnicode(false)
+                      .IsRequired(false)
+                      .HasColumnName("CREATE_DATE");
+
+                entity.Property(e => e.CreateUser)
+                     .HasMaxLength(300)
+                     .IsUnicode(false)
+                     .IsRequired(false)
+                     .HasColumnName("CREATE_USER");
+
+                entity.Property(e => e.EditDate)
+                     .HasMaxLength(300)
+                     .IsUnicode(false)
+                     .IsRequired(false)
+                     .HasColumnName("EDIT_DATE");
+
+                entity.Property(e => e.EditUser)
+                    .HasMaxLength(300)
+                    .IsUnicode(false)
+                    .IsRequired(false)
+                    .HasColumnName("EDIT_USER");
+
+                entity.Property(e => e.DateUse)
+                    .HasPrecision(10)
+                    .IsRequired(false)
+                    .HasColumnName("DATE_USE");
+
+
+                entity.Property(e => e.IsCombo)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsRequired(false)
+                    .HasColumnName("IS_COMBO");
+
+                entity.Property(e => e.DataSocialNetwork)
+                    .HasMaxLength(300)
+                    .IsUnicode(false)
+                    .IsRequired(false)
+                    .HasColumnName("DATA_SOCIAL_NETWORK");
+
+                entity.Property(e => e.IsDomesticPackage)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsRequired(false)
+                    .HasColumnName("IS_DOMESTIC_PACKAGE");
+
+                entity.Property(e => e.IsFlashSale)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsRequired(false)
+                    .HasColumnName("IS_FLASH_SALE");
+
+
+                entity.Property(e => e.FromTimeFlashSale)
+                    .HasMaxLength(300)
+                    .IsUnicode(false)
+                    .IsRequired(false)
+                    .HasColumnName("FROM_TIME_FLASH_SALE");
+
+                entity.Property(e => e.ToTimeFlashSale)
+                    .HasMaxLength(300)
+                    .IsUnicode(false)
+                    .IsRequired(false)
+                    .HasColumnName("TO_TIME_FLASH_SALE");
+
+                entity.Property(e => e.Resouce)
+                    .HasMaxLength(300)
+                    .IsUnicode(false)
+                    .IsRequired(false)
+                    .HasColumnName("RESOURCE");
+
+                entity.Property(e => e.RmtqCountry)
+                    .HasMaxLength(2000)
+                    .IsUnicode(false)
+                    .IsRequired(false)
+                    .HasColumnName("RMTQ_COUNTRY");
+
+                entity.Property(e => e.Note)
+                    .HasMaxLength(300)
+                    .IsUnicode(false)
+                    .IsRequired(false)
+                    .HasColumnName("NOTE");
+            });
+            #endregion
+
+
             modelBuilder.HasSequence("CUSTOMER_ACCOUNT_INFO_SEQ");
             modelBuilder.HasSequence("EXTERNAL_REQUEST_SEQ");
             modelBuilder.HasSequence("PAY_BILL_SEQ");
+            modelBuilder.HasSequence("PACKAGE_TELCO_SEQ");
         }
     }
 }

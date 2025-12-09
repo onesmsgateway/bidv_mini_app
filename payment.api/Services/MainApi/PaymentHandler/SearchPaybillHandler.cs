@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using payment.api.Services.ModelApi;
 using payment.entity;
 using PaymentPackageTelco.api.Services.ModelApi.Response;
+using System.Globalization;
 using System.Net;
 using static payment.api.Services.ModelApi.ApiModelBase;
 
@@ -38,10 +39,33 @@ namespace PaymentPackageTelco.api.Services.MainApi.PaymentHandler
                                         .Distinct()
                                         .ToListAsync();
 
+                var _monthlyDetails = _searchData
+                                    .GroupBy(er =>
+                                    {
+                                        if (DateTime.TryParseExact(er.TransactionDate, "yyyyMMddHHmmss", CultureInfo.InvariantCulture,
+                            DateTimeStyles.None, out DateTime parsedDate))
+                                            return new {Year = parsedDate.Year, Month = parsedDate.Month };
+                                        return new {Year = 0, Month =0};
+                                    })
+                                    .Where(g => g.Key.Month >=1 && g.Key.Month <=12)
+                                    .Select(g => new 
+                                    {
+                                        Period = $"Tháng {g.Key.Month}/{g.Key.Year}",
+                                        Data = g.ToList().Select(er => new
+                                        {
+                                            TransactionDate = er.TransactionDate,
+                                            Value = er.Value,
+                                            PackageId = er.PackageId
+                                        }).ToList()
+                                    })
+                                    .OrderBy(s => s.Period.Substring(s.Period.Length - 4))
+                                    .ThenBy(s => s.Period)
+                                    .ToList();
+                                    
                 return new ApiDataResponseBase {
                     StatusCode = HttpStatusCode.OK,
                     Message = "Success",
-                    Data = _searchData
+                    Data = _monthlyDetails
                 };
 
             }
