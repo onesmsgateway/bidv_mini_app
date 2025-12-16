@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using payment.entity.BusinessEntities;
 using payment.entity.DbEntities;
+using PaymentPackageTelco.entity.DbEntities.BusinessEntities;
 
 namespace payment.entity
 {
@@ -295,12 +295,47 @@ namespace payment.entity
                     .IsRequired(false)
                     .HasColumnName("DATE_USE");
 
-
-                entity.Property(e => e.IsCombo)
-                    .HasMaxLength(1)
+                entity.Property(e => e.DescriptionData)
+                    .HasMaxLength(500)
                     .IsUnicode(false)
                     .IsRequired(false)
-                    .HasColumnName("IS_COMBO");
+                    .HasColumnName("DESCRIPTION_DATA");
+
+                entity.Property(e => e.TotalCapacity)
+                    .HasPrecision(10)
+                    .IsUnicode(false)
+                    .IsRequired(false)
+                    .HasColumnName("TOTAL_CAPACITY");
+
+                entity.Property(e => e.SellingPrice)
+                    .HasPrecision(20)
+                    .IsUnicode(false)
+                    .IsRequired(false)
+                    .HasColumnName("SELLING_PRICE");
+
+                entity.Property(e => e.TotalQuanlity)
+                    .HasPrecision(20)
+                    .IsUnicode(false)
+                    .IsRequired(false)
+                    .HasColumnName("TOTAL_QUANLITY");
+
+                entity.Property(e => e.PackageDataType)
+                    .HasPrecision(5)
+                    .IsUnicode(false)
+                    .IsRequired(false)
+                    .HasColumnName("PACKAGE_DATA_TYPE");
+
+                entity.Property(e => e.PackageType)
+                    .HasPrecision(5)
+                    .IsUnicode(false)
+                    .IsRequired(false)
+                    .HasColumnName("PACKAGE_TYPE");
+
+                entity.Property(e => e.UtilityType)
+                    .HasPrecision(5)
+                    .IsUnicode(false)
+                    .IsRequired(false)
+                    .HasColumnName("UTILITY_TYPE");
 
                 entity.Property(e => e.DataSocialNetwork)
                     .HasMaxLength(300)
@@ -308,33 +343,14 @@ namespace payment.entity
                     .IsRequired(false)
                     .HasColumnName("DATA_SOCIAL_NETWORK");
 
-                entity.Property(e => e.IsDomesticPackage)
-                    .HasMaxLength(1)
+                entity.Property(e => e.AreaPackage)
+                    .HasPrecision(2)
                     .IsUnicode(false)
                     .IsRequired(false)
-                    .HasColumnName("IS_DOMESTIC_PACKAGE");
+                    .HasColumnName("AREA_PACKAGE");
 
-                entity.Property(e => e.IsFlashSale)
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .IsRequired(false)
-                    .HasColumnName("IS_FLASH_SALE");
-
-
-                entity.Property(e => e.FromTimeFlashSale)
-                    .HasMaxLength(300)
-                    .IsUnicode(false)
-                    .IsRequired(false)
-                    .HasColumnName("FROM_TIME_FLASH_SALE");
-
-                entity.Property(e => e.ToTimeFlashSale)
-                    .HasMaxLength(300)
-                    .IsUnicode(false)
-                    .IsRequired(false)
-                    .HasColumnName("TO_TIME_FLASH_SALE");
-
-                entity.Property(e => e.Resouce)
-                    .HasMaxLength(300)
+                entity.Property(e => e.Resource)
+                    .HasMaxLength(500)
                     .IsUnicode(false)
                     .IsRequired(false)
                     .HasColumnName("RESOURCE");
@@ -350,6 +366,18 @@ namespace payment.entity
                     .IsUnicode(false)
                     .IsRequired(false)
                     .HasColumnName("NOTE");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(300)
+                    .IsUnicode(false)
+                    .IsRequired(false)
+                    .HasColumnName("DESCRIPTION");
+
+                entity.Property(e => e.Status)
+                    .HasMaxLength(300)
+                    .IsUnicode(false)
+                    .IsRequired(false)
+                    .HasColumnName("STATUS");
             });
             #endregion
 

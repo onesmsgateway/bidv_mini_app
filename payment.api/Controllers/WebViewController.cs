@@ -4,6 +4,7 @@ using payment.api.AppSettings;
 using payment.api.Common;
 using PaymentPackage.api.Services.ModelApi.Request;
 using PaymentPackageTelco.api.Attributes;
+using PaymentPackageTelco.api.Services.ModelApi.Request;
 using System.Text;
 using static payment.api.Services.ModelApi.ApiModelBase;
 
@@ -18,12 +19,41 @@ namespace payment.api.Controllers
         public WebViewController(IMediator mediator) => _mediator = mediator;
         private readonly IMediator _mediator;
 
-        [HttpPost("get-package-telco")]
-        public async Task<IApiResponse> PackageTelco(SearchPackageRequest request)
+        //[HttpPost("get-package-telco")]
+        //public async Task<IApiResponse> PackageTelco(SearchAreaPackageRequest request)
+        //{
+        //    return await _mediator.Send(request);
+        //}
+
+        [HttpGet("topup-data")]
+        public async Task<IApiResponse> GetTopupData([FromQuery] FilterAreaPackageTopupRequest request)
         {
             return await _mediator.Send(request);
         }
 
+        [HttpGet("topup-data/{package_name}")]
+        public async Task<IApiResponse> GetDetailPackageTopup([FromRoute] GetDetailPackageTopupRequest request)
+        {
+            return await _mediator.Send(request);
+        }
+
+        [HttpGet("combo-data")]
+        public async Task<IApiResponse> GetComboData([FromQuery] FilterComboDataPackageRequest request)
+        {
+            return await _mediator.Send(request);
+        }
+
+        [HttpGet("combo-data/{package_name}")]
+        public async Task<IApiResponse> GetDetailPackageCombo(GetDetailPackageTopupRequest request)
+        {
+            return await _mediator.Send(request);
+        }
+
+        [HttpPost("check-telco")]
+        public async Task<IApiResponse> CheckTelco(CheckTelcoRequest request)
+        {
+            return await _mediator.Send(request);
+        }
 
         /// <summary>
         /// (6)API cung cấp URL để đóng Webview và quay lại ứng dụng ngân hàng.

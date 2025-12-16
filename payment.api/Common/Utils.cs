@@ -9,8 +9,8 @@ namespace payment.api.Common
 {
     public class Utils
     {
-
-        public static string GenerateSha256(string payload)        {
+        public static string GenerateSha256(string payload)   
+        {
             var _key = AppConst.bidvSignSecretKey;
             var _payload = $"{_key}|{payload}";
             using (var _hmac = new HMACSHA256(Encoding.UTF8.GetBytes(_key)))
@@ -20,6 +20,17 @@ namespace payment.api.Common
                 foreach (var b in _hashBytes) sb.Append(b.ToString("x2"));
                 return sb.ToString();
             }
+        }
+
+        public static IList<string> SplitAndTrim(string str, char separator = ',')
+        {
+            if (string.IsNullOrWhiteSpace(str))
+                return new List<string>();
+
+            return str.Split(new char[] { separator }, StringSplitOptions.RemoveEmptyEntries)
+                         .Select(s => s.Trim())
+                         .Where(s => !string.IsNullOrWhiteSpace(s))
+                         .ToList();
         }
 
         public static string EncryptAES(string jsonPayload, string base64Key, string base64IV)
@@ -126,6 +137,67 @@ namespace payment.api.Common
             output = output.Replace("+", "-");
             output = output.Replace("/", "_");
             return output;
+        }
+    }
+
+    public static class StringExtensions
+    {
+        public static bool IsEqualIgnoreCase(this string? sourceStr, string? targetStr)
+        {
+            if (ReferenceEquals(sourceStr, targetStr))
+            {
+                return true;
+            }
+            if (sourceStr == null || targetStr == null)
+            {
+                return false;
+            }
+            return sourceStr.Equals(targetStr, StringComparison.OrdinalIgnoreCase);
+        }
+
+        public static string GetValueOrDefault(this string? sourceStr)
+        {
+            return sourceStr ?? "";
+        }
+
+
+        public static int ParseToIntOrDefault(this string? source)
+        {
+            if (string.IsNullOrWhiteSpace(source))
+            {
+                return 0;
+            }
+            if (int.TryParse(source, out int result))
+            {
+                return result;
+            }
+            return 0;
+        }
+
+        public static bool ContainsIgnoreCase(this string? source, string value)
+        {
+            if (source == null || value == null)
+            {
+                return false;
+            }
+            if (value.Length == 0)
+            {
+                return true;
+            }
+            return source.IndexOf(value, StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+    }
+
+    public static class ByteConverterExtensions
+    {
+        public static decimal ToGb(this int megabytes)
+        {
+            return Math.Round((decimal)(megabytes / 1024.0), 2, MidpointRounding.AwayFromZero);  ;
+        }
+
+        public static decimal ToGbPerDay(this int megabytes, decimal days)
+        {
+            return Math.Round(Math.Round((decimal)(megabytes / 1024.0), 2, MidpointRounding.AwayFromZero) / days, 2, MidpointRounding.AwayFromZero); 
         }
     }
 

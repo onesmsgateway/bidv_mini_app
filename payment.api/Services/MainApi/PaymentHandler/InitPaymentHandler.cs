@@ -55,7 +55,7 @@ namespace payment.api.Services.MainApi.PaymentHandler
                     _request.Headers.Add("Timestamp", DateTime.UtcNow.ToString("o", System.Globalization.CultureInfo.InvariantCulture));
                     _request.Headers.Add("X-Customer-IP-Address", AppConst.partnerCustomerIPAddress);
 
-                    #region chờ đối nối bidv
+                    #region chờ đấu nối bidv
                     /*
                     _request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", (await BidvAccountService.GetTokenAsynWithCache(AppConst.bidvAccessTokenClientId, AppConst.bidvAccessTokenClientSecret, AppConst.bidvCacheTokenKey)).access_token);
                     var _requestObj = new SmartBankingRequest()
