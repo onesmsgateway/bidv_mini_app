@@ -1,4 +1,6 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using payment.api.AppSettings;
 using payment.api.Common;
@@ -63,6 +65,8 @@ namespace payment.api.Controllers
         [HttpGet("close-url")]
         public async Task<IActionResult> CloseWebviewUrl()
         {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
             return Ok(new
             {
                 CloseUrl = Utils.Base64UrlEncode(Encoding.UTF8.GetBytes(AppConst.bidvNavigatorUrl)),
