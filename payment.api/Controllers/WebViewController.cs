@@ -44,7 +44,7 @@ namespace payment.api.Controllers
         }
 
         [HttpGet("combo-data/{package_name}")]
-        public async Task<IApiResponse> GetDetailPackageCombo(GetDetailPackageTopupRequest request)
+        public async Task<IApiResponse> GetDetailPackageCombo([FromRoute] GetDetailPackageTopupRequest request)
         {
             return await _mediator.Send(request);
         }
