@@ -36,6 +36,8 @@ namespace PaymentPackageTelco.api.Services.MainApi.PaymentHandler
                 TotalCapacity = $"{_package.TotalCapacity.GetValueOrDefault().ToGb()} GB",
                 CapacityPerDay = $"{_package.TotalCapacity.GetValueOrDefault().ToGbPerDay(_package.DateUse.GetValueOrDefault())} GB/ngày",
                 OriginalPrice = _package.Amount.ParseToIntOrDefault(),
+                DataType = EnumUtil.ToUtilityTypeName(_package.UtilityType.GetValueOrDefault()),
+                PackageType = EnumUtil.ToPackageTypeName(_package.PackageType.GetValueOrDefault()),
                 SellingPrice = _package.SellingPrice.GetValueOrDefault(),
                 RtmtqCountry = _package.RmtqCountry.GetValueOrDefault(),
                 Resource = _package.Resource.GetValueOrDefault(),

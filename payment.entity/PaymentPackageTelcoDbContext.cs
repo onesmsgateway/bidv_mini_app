@@ -31,6 +31,8 @@ namespace payment.entity
             {
                 entity.ToTable("CUSTOMER_ACCOUNT_INFO");
 
+                //entity.HasKey(entity => entity.CustomerId);
+
                 entity.Property(e => e.Id)
                       .HasPrecision(18)
                       .HasColumnName("ID")
@@ -237,6 +239,8 @@ namespace payment.entity
             {
                 entity.ToTable("PACKAGE_TELCO");
 
+                //entity.HasKey(p => p.PackageName);
+
                 entity.Property(e => e.Id)
                       .HasPrecision(18)
                       .HasColumnName("ID")
@@ -300,6 +304,18 @@ namespace payment.entity
                     .IsUnicode(false)
                     .IsRequired(false)
                     .HasColumnName("DESCRIPTION_DATA");
+
+                entity.Property(e => e.DescriptionBonusFree)
+                      .HasMaxLength(300)
+                      .IsUnicode(false)
+                      .IsRequired(false)
+                      .HasColumnName("DESCRIPTION_BONUS_FREE");
+
+                entity.Property(e => e.DescriptionBonusUtility)
+                      .HasMaxLength(300)
+                      .IsUnicode(false)
+                      .IsRequired(false)
+                      .HasColumnName("DESCRIPTION_BONUS_UTILITY");
 
                 entity.Property(e => e.TotalCapacity)
                     .HasPrecision(10)
@@ -378,6 +394,12 @@ namespace payment.entity
                     .IsUnicode(false)
                     .IsRequired(false)
                     .HasColumnName("STATUS");
+
+                entity.Property(e => e.PackageName)
+                      .HasMaxLength(300)
+                      .IsUnicode(false)
+                      .IsRequired(false)
+                      .HasColumnName("PACKAGE_NAME");
             });
             #endregion
 

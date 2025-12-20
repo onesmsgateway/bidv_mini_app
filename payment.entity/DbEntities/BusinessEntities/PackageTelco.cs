@@ -29,6 +29,10 @@ namespace PaymentPackageTelco.entity.DbEntities.BusinessEntities
 
         [Column("DESCRIPTION_DATA")]
         public string? DescriptionData { get; set; }
+        [Column("DESCRIPTION_BONUS_FREE")]
+        public string? DescriptionBonusFree { get; set; }
+        [Column("DESCRIPTION_BONUS_UTILITY")]
+        public string? DescriptionBonusUtility { get; set; }
         [Column("TOTAL_CAPACITY")]
         public int? TotalCapacity { get; set; }
         [Column("SELLING_PRICE")]

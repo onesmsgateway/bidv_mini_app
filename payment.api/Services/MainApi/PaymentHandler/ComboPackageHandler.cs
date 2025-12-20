@@ -26,19 +26,25 @@ namespace PaymentPackageTelco.api.Services.MainApi.PaymentHandler
             short fourItems = 4;
 
             var _popularPackages = await _packageTecos
+            .OrderByDescending(p => _externalRequests.Where(t => t.PackageId == p.PackageName).Count())
+            .Take(fourItems)
             .Select(p => new PackageDetailResponse
             {
-                Id = p.Id,
+                Id = p.Id,  
                 PackageName = p.PackageName.GetValueOrDefault(),
                 Duration = $"{p.DateUse.GetValueOrDefault()} ngày",
                 TotalCapacity = $"{p.TotalCapacity.GetValueOrDefault().ToGb()} GB",
                 CapacityPerDay = $"{p.TotalCapacity.GetValueOrDefault().ToGbPerDay(p.DateUse.GetValueOrDefault())} GB/ngày",
+                DataType = EnumUtil.ToUtilityTypeName(p.UtilityType.GetValueOrDefault()),
+                PackageType = EnumUtil.ToPackageTypeName(p.PackageType.GetValueOrDefault()),
                 OriginalPrice = p.Amount.ParseToIntOrDefault(),
                 SellingPrice = p.SellingPrice.GetValueOrDefault(),
                 TotalQuantity = p.TotalQuanlity.GetValueOrDefault(),
                 TotalQuantitySold = _externalRequests.Count(t => t.PackageId.ToLower() == p.PackageName.ToLower()),
                 Description = p.Description.GetValueOrDefault(),
                 DescriptonData = p.DescriptionData.GetValueOrDefault(),
+                DescriptonBonusFree = p.DescriptionBonusFree.GetValueOrDefault(),
+                DescriptonBonusUtility = p.DescriptionBonusUtility.GetValueOrDefault(),
                 Status = p.Status.GetValueOrDefault()
             })
             .ToListAsync();
@@ -51,14 +57,18 @@ namespace PaymentPackageTelco.api.Services.MainApi.PaymentHandler
                     Duration = $"{p.DateUse.GetValueOrDefault()} ngày",
                     TotalCapacity = $"{p.TotalCapacity.GetValueOrDefault().ToGb()} GB",
                     CapacityPerDay = $"{p.TotalCapacity.GetValueOrDefault().ToGbPerDay(p.DateUse.GetValueOrDefault())} GB/ngày",
+                    DataType = EnumUtil.ToUtilityTypeName(p.UtilityType.GetValueOrDefault()),
+                    PackageType = EnumUtil.ToPackageTypeName(p.PackageType.GetValueOrDefault()),
                     OriginalPrice = p.Amount.ParseToIntOrDefault(),
                     SellingPrice = p.SellingPrice.GetValueOrDefault(),
                     TotalQuantity = p.TotalQuanlity.GetValueOrDefault(),
                     TotalQuantitySold = _externalRequests.Count(t => t.PackageId.ToLower() == p.PackageName.ToLower()),
                     Description = p.Description.GetValueOrDefault(),
                     DescriptonData = p.DescriptionData.GetValueOrDefault(),
+                    DescriptonBonusFree = p.DescriptionBonusUtility.GetValueOrDefault(),
+                    DescriptonBonusUtility = p.DescriptionBonusFree.GetValueOrDefault(),
                     DataSocialNetwork = p.DataSocialNetwork.GetValueOrDefault(),
-                    Status = p.Status
+                    Status = p.Status.GetValueOrDefault()
                 })
                 .ToListAsync();
 

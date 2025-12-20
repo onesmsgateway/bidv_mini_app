@@ -10,6 +10,8 @@ namespace PaymentPackageTelco.api.Services.ModelApi.Response
         public string PackageName { get; set; }
         public string Duration { get; set; }
         public string TotalCapacity { get; set; }
+        public string? DataType { get; set; } //: data, social_network
+        public string? PackageType { get; set; }
         public string CapacityPerDay { get; set; }
         public int OriginalPrice { get; set; }
         public int SellingPrice { get; set; }
@@ -17,6 +19,8 @@ namespace PaymentPackageTelco.api.Services.ModelApi.Response
         public int TotalQuantitySold { get; set; }
         public string Description { get; set; }
         public string DescriptonData { get; set; }
+        public string DescriptonBonusFree { get; set; }
+        public string DescriptonBonusUtility { get; set; }
         public string Status { get; set; }
     }
 

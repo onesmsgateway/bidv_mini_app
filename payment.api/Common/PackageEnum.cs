@@ -43,7 +43,30 @@
 
     public enum UtilityType
     {
-        normal = 0,
-        socialnetutility = 1
+        data = 0,
+        social_network = 1
+    }
+
+    public static class EnumUtil
+    {
+        public static string ToUtilityTypeName(int? value)
+        {
+            if (Enum.IsDefined(typeof(UtilityType), value == null ? 0 : value))
+            {
+                if (value == null) value = 0;
+                return ((UtilityType)value).ToString();
+            }
+            return "";
+        }
+
+        public static string ToPackageTypeName(int? value)
+        {
+            if (Enum.IsDefined(typeof(PackageType), value == null ? 0 : value))
+            {
+                if (value == null) value = 0;
+                return ((PackageType)value).ToString();
+            }
+            return "";
+        }
     }
 }
