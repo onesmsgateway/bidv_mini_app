@@ -1,16 +1,12 @@
 ﻿using MediatR;
-using Newtonsoft.Json;
 using payment.api.AppSettings;
 using payment.api.Common;
-using payment.api.Services.CommonServices;
 using payment.api.Services.ModelApi;
 using payment.api.Services.ModelApi.Request;
-using payment.api.Services.ModelApi.Request.ExternalRequestExtMethod;
 using payment.api.Services.ModelApi.Response;
 using payment.entity;
 using payment.entity.DbEntities;
 using System.Net;
-using System.Net.Http.Headers;
 using System.Text;
 using static payment.api.Services.ModelApi.ApiModelBase;
 
@@ -34,10 +30,12 @@ namespace payment.api.Services.MainApi.PaymentHandler
                 CarrierId = request.CarrierId,
                 PackageId = request.PackageId,
                 DataVolume = request.DataVolume,
+                CustomerId = request.CustomerId,
                 Value = request.Value,
+                Status = "false", 
                 DiscountCode = request.DiscountCode,
                 TotalPaymentAmount = request.TotalPaymentAmount,
-                IssueCoporateInvoice = request.IssueCorporateInvoice,
+                IssueCoporateInvoice = (bool)request.IssueCorporateInvoice ? "true": "false",
                 System = request.System,
                 CreateDate = DateTime.UtcNow.ToString(),
             };
@@ -48,7 +46,7 @@ namespace payment.api.Services.MainApi.PaymentHandler
                 {
                     var _request = new HttpRequestMessage(HttpMethod.Post, AppConst.bidvSmartBankPaymentUrl);
                     
-                    _request.Headers.Add("Content-Type", "application/json");
+                    //_request.Headers.Add("Content-Type", "application/json");
                     _request.Headers.Add("Channel", AppConst.partnerChannel);
                     _request.Headers.Add("User-Agent", AppConst.partnerUserAgent);
                     _request.Headers.Add("X-API-Interaction-ID", Utils.GenerateRandomDigitWith(12));
@@ -56,8 +54,10 @@ namespace payment.api.Services.MainApi.PaymentHandler
                     //X-Idempotency-Key
                     _request.Headers.Add("Timestamp", DateTime.UtcNow.ToString("o", System.Globalization.CultureInfo.InvariantCulture));
                     _request.Headers.Add("X-Customer-IP-Address", AppConst.partnerCustomerIPAddress);
-                    _request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", (await BidvAccountService.GetAccessTokenAsync()).AccessToken);
 
+                    #region chờ đấu nối bidv
+                    /*
+                    _request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", (await BidvAccountService.GetTokenAsynWithCache(AppConst.bidvAccessTokenClientId, AppConst.bidvAccessTokenClientSecret, AppConst.bidvCacheTokenKey)).access_token);
                     var _requestObj = new SmartBankingRequest()
                     {
                         Action = "payment", // Hành động
@@ -69,14 +69,20 @@ namespace payment.api.Services.MainApi.PaymentHandler
                     var _payload = BidvJweRequestHelper.GenJWE(JsonConvert.SerializeObject(_requestObj));
                     _request.Headers.Add("X-JWS-Signature", BidvJweRequestHelper.SignJWS(_payload));
                     _request.Content = new StringContent(_payload, Encoding.UTF8, "application/json");
-                    
+
                     var _response = await httpClient.SendAsync(_request);
                     var _responseBody = await _response.Content.ReadAsStringAsync();
+                     */
+                    #endregion
 
+                    #region chờ đấu nối bdiv
+                    /*
                     if (!_response.IsSuccessStatusCode)
                     {
                         return new ApiDetailedResponseBase() { StatusCode = HttpStatusCode.BadRequest, Message = "Request không hợp lệ.", Details = "Request Parse Action Error" };
                     }
+                    */
+                    #endregion
 
                     await _dbContext.AddAsync(_externalRequest);
                     await _dbContext.SaveChangesAsync();
@@ -93,7 +99,7 @@ namespace payment.api.Services.MainApi.PaymentHandler
                     Data = new DataBillingResponse()
                     {
                         BillNumber = _externalRequest.BillNumber,
-                        RedirectUrl = "trangthanhtoan smartbanking"
+                        RedirectUrl = Utils.Base64UrlEncode(Encoding.UTF8.GetBytes(AppConst.bidvPaymentPageUrl))
                     }
                 };
             }

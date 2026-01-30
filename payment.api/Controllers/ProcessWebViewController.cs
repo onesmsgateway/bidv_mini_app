@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using payment.api.Services.ModelApi.Request;
 using payment.api.Services.ModelApi.Response;
@@ -10,7 +11,7 @@ namespace payment.api.Controllers
     [ApiController]
     [Route("api/[Controller]")]
     [Produces("application/json")]
-    public partial class ProcessWebViewController : ControllerBase
+    public class ProcessWebViewController : ControllerBase
     {
         public ProcessWebViewController(IMediator mediator) => _mediator = mediator;
 
@@ -20,6 +21,7 @@ namespace payment.api.Controllers
         /// </summary>
         /// <param name="bRequest">Thông tin giao dịch từ BIDV.</param>
         /// <returns>Đối tượng WebviewResponse chứa URL webview.</returns>
+        [AllowAnonymous]
         [HttpPost("get-url")]
         public async Task<IApiResponse> GetUrl([FromHeader] WebViewHeaderRequest hRequest, [FromBody] WebViewBodyRequest bRequest, CancellationToken cancellation)
         {

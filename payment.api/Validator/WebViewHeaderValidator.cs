@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace payment.api.Validator
 {
-    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = true)]
     public sealed class TimestampValidator : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
@@ -17,7 +17,7 @@ namespace payment.api.Validator
                DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal,
                out _);
             if (!isValid)
-                new ValidationResult(ErrorMessage ?? $"{validationContext.DisplayName} định dạng chưa đúng: {_expectedFormat}.");
+                return new ValidationResult(ErrorMessage ?? $"{validationContext.DisplayName} định dạng chưa đúng: {_expectedFormat}.");
 
             return ValidationResult.Success;
         }
@@ -30,25 +30,6 @@ namespace payment.api.Validator
             if (value == null || string.IsNullOrWhiteSpace(value.ToString()))
                 return new ValidationResult("thiếu thông tin X-API-Interaction-ID");
             
-            return ValidationResult.Success;
-        }
-    }
-
-    public sealed class ApiUrlValidator : ValidationAttribute
-    {
-        protected override ValidationResult IsValid(object _value, ValidationContext validationContext)
-        {
-            if (_value == null || string.IsNullOrWhiteSpace(_value.ToString()))
-                return new ValidationResult("ApiUrl is required");
-
-            var url = _value.ToString().Trim();
-
-            if (!Uri.TryCreate(url, UriKind.Absolute, out var uriResult))
-                return new ValidationResult("ApiUrl is not valid");
-
-            if (uriResult.Scheme != Uri.UriSchemeHttp && uriResult.Scheme != Uri.UriSchemeHttps)
-                return new ValidationResult("ApiUrl must start with http:// or https://");
-
             return ValidationResult.Success;
         }
     }

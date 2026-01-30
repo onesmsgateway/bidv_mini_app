@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using static payment.api.Services.ModelApi.ApiModelBase;
+﻿using static payment.api.Services.ModelApi.ApiModelBase;
 
 namespace PaymentPackage.api.Services.ModelApi.Request
 {

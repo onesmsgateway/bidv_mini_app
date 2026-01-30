@@ -3,8 +3,8 @@ using System.Text.Json.Serialization;
 
 namespace payment.entity.DbEntities
 {
-    [Table("INSTANT_PAYMENT_NOTIFICATION")]
-    public class InstantPaymentNotification : BaseEntity
+    [Table("PAY_BILL")]
+    public class PayBill : BaseEntity
     {
         [Column("TRANSACTION_ID")]
         public string TransactionId { get; set; }

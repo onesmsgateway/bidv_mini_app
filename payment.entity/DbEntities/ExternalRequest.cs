@@ -7,8 +7,13 @@ namespace payment.entity.DbEntities
     {
         [Column("BILL_NUMBER")]
         public string? BillNumber { get; set; }
+
+        [Column("CUSTOMER_ID")]
+        public string? CustomerId { get; set; }
+
         [Column("SYSTEM")]
         public string? System { get; set; }
+        [Column("SERVICE")]
         public string? Service { get; set; }
         [Column("SERVICE_ID")]
         public string? ServiceId { get; set; }
@@ -29,6 +34,8 @@ namespace payment.entity.DbEntities
         [Column("TOTAL_PAYMENT_AMOUNT")]
         public string? TotalPaymentAmount { get; set; }
         [Column("ISSUE_CORPORATE_INVOICE")]
-        public bool? IssueCoporateInvoice { get; set; }
+        public string? IssueCoporateInvoice { get; set; }
+        [Column("STATUS")]
+        public string? Status { get; set; }
     }
 }

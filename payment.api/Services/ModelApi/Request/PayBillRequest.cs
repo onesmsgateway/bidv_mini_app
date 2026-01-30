@@ -1,9 +1,10 @@
-﻿using System.Text.Json.Serialization;
+﻿using PaymentPackageTelco.api.Validator;
+using System.Text.Json.Serialization;
 using static payment.api.Services.ModelApi.ApiModelBase;
 
 namespace payment.api.Services.ModelApi.Request
 {
-    public class InstantPaymentNotificationRequest : IApiInput
+    public class PayBillRequest : IApiInput
     {
         [JsonPropertyName("trans_id")]
         public string TransactionId { get; set; }
@@ -26,7 +27,7 @@ namespace payment.api.Services.ModelApi.Request
         [JsonPropertyName("amount")]
         public string Value { get; set; }
 
-        [JsonPropertyName("checksum")]
+        [JsonPropertyName("checksum"), ChecksumPayBillValidator]
         public string Checksum { get; set; }
     }
 }

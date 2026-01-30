@@ -6,10 +6,6 @@ namespace payment.entity
     {
         [Column("ID")]
         public long Id { get; set; }
-        [Column("NAME")]
-        public string? Name { get; set; }
-        [Column("DESCRIPTION")]
-        public string? Description { get; set; }
         [Column("CREATEDATE")]
         public string? CreateDate { get; set; } = DateTime.UtcNow.ToString();
     }

@@ -9,10 +9,10 @@ namespace payment.api.Common
 {
     public class Utils
     {
-        public static string GenerateSha256(string timestamp, string userId, string service, string data, string language)
+        public static string GenerateSha256(string payload)   
         {
             var _key = AppConst.bidvSignSecretKey;
-            var _payload = $"{_key}|{timestamp}|{userId}|{service}|{data}|{language}";
+            var _payload = $"{_key}|{payload}";
             using (var _hmac = new HMACSHA256(Encoding.UTF8.GetBytes(_key)))
             {
                 var _hashBytes = _hmac.ComputeHash(Encoding.UTF8.GetBytes(_payload));
@@ -22,17 +22,15 @@ namespace payment.api.Common
             }
         }
 
-        public static string GenerateSha256(string billnumber, string serviceId)
+        public static IList<string> SplitAndTrim(string str, char separator = ',')
         {
-            var _key = AppConst.bidvSignSecretKey;
-            var _payload = $"{_key}|{serviceId}|{billnumber}";
-            using (var _hmac = new HMACSHA256(Encoding.UTF8.GetBytes(_key)))
-            {
-                var _hashBytes = _hmac.ComputeHash(Encoding.UTF8.GetBytes(_payload));
-                var sb = new StringBuilder(_hashBytes.Length * 2);
-                foreach (var b in _hashBytes) sb.Append(b.ToString("x2"));
-                return sb.ToString();
-            }
+            if (string.IsNullOrWhiteSpace(str))
+                return new List<string>();
+
+            return str.Split(new char[] { separator }, StringSplitOptions.RemoveEmptyEntries)
+                         .Select(s => s.Trim())
+                         .Where(s => !string.IsNullOrWhiteSpace(s))
+                         .ToList();
         }
 
         public static string EncryptAES(string jsonPayload, string base64Key, string base64IV)
@@ -140,5 +138,108 @@ namespace payment.api.Common
             output = output.Replace("/", "_");
             return output;
         }
+    }
+
+    public static class StringExtensions
+    {
+        public static bool IsEqualIgnoreCase(this string? sourceStr, string? targetStr)
+        {
+            if (ReferenceEquals(sourceStr, targetStr))
+            {
+                return true;
+            }
+            if (sourceStr == null || targetStr == null)
+            {
+                return false;
+            }
+            return sourceStr.Equals(targetStr, StringComparison.OrdinalIgnoreCase);
+        }
+
+        public static string GetValueOrDefault(this string? sourceStr)
+        {
+            return sourceStr ?? "";
+        }
+
+
+        public static int ParseToIntOrDefault(this string? source)
+        {
+            if (string.IsNullOrWhiteSpace(source))
+            {
+                return 0;
+            }
+            if (int.TryParse(source, out int result))
+            {
+                return result;
+            }
+            return 0;
+        }
+
+        public static bool ContainsIgnoreCase(this string? source, string value)
+        {
+            if (source == null || value == null)
+            {
+                return false;
+            }
+            if (value.Length == 0)
+            {
+                return true;
+            }
+            return source.IndexOf(value, StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+    }
+
+    public static class ByteConverterExtensions
+    {
+        public static decimal ToGb(this int megabytes)
+        {
+            return Math.Round((decimal)(megabytes / 1024.0), 2, MidpointRounding.AwayFromZero);  ;
+        }
+
+        public static decimal ToGbPerDay(this int megabytes, decimal days)
+        {
+            return Math.Round(Math.Round((decimal)(megabytes / 1024.0), 2, MidpointRounding.AwayFromZero) / days, 2, MidpointRounding.AwayFromZero); 
+        }
+    }
+
+    public class JwtUtils
+    {
+        public static JwtSecurityToken GetTokenInfo(string token)
+        {
+            SecurityToken validatedToken;
+            try
+            {
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes(AppConst.jwtKey);
+                tokenHandler.ValidateToken(token, new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.FromMinutes(AppConst.partnerJwtExpired)
+                }, out validatedToken);
+                return (JwtSecurityToken)validatedToken;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+        }
+
+        public static async Task<string> GenerateToken(string customerId, string customerName, int hour_expired)
+        {
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppConst.jwtKey));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            
+            var claims = new[] {
+                new Claim("id", customerId),
+                new Claim("username", customerName),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            };
+            var token = new JwtSecurityToken(null, null, claims, expires: DateTime.UtcNow.AddHours(hour_expired), signingCredentials: credentials);
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
     }
 }
